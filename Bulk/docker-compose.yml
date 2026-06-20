@@ -1,0 +1,9 @@
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+##################################################################################
+  authenticationservice:
+    image: ${DOCKER_REGISTRY-}authenticationservice
+    build:
+      context: .
+      dockerfile: src/AuthenticationService/Dockerfile
