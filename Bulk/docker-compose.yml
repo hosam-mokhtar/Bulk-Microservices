@@ -1,15 +1,24 @@
 services:
-  sql-server:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-##################################################################################
   authenticationservice:
     image: ${DOCKER_REGISTRY-}authenticationservice
     build:
       context: .
       dockerfile: src/AuthenticationService/Dockerfile
-
+      
+  # ==========================================
+  # 2. workoutservice Service 
+  # ==========================================
   workoutservice:
     image: ${DOCKER_REGISTRY-}workoutservice
     build:
       context: .
-      dockerfile: src/workoutservice/Dockerfile
+      dockerfile: src/WorkoutService/Dockerfile
+
+  # ==========================================
+  # 3. userprofileservice Service 
+  # ==========================================
+  userprofileservice:
+    image: ${DOCKER_REGISTRY-}userprofileservice
+    build:
+      context: .
+      dockerfile: src/UserProfileService/Dockerfile

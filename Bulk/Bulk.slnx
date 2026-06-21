@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/AuthenticationService/AuthenticationService.csproj" />
+    <Project Path="src/UserProfileService/UserProfileService.csproj" Id="f72b74ee-16e4-48f9-86c3-881f35d38353" />
     <Project Path="src/WorkoutService/WorkoutService.csproj" Id="f3297844-45be-49b5-a48c-15f9ae742dee" />
   </Folder>
   <Project Path="docker-compose.dcproj">
