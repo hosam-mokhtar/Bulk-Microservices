@@ -24,8 +24,8 @@ namespace UserProfileService.Persistence.Migrations
 
             modelBuilder.Entity("UserProfileService.Entities.NotificationSetting", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("AchievementAlerts")
                         .HasColumnType("bit");
@@ -52,8 +52,8 @@ namespace UserProfileService.Persistence.Migrations
 
             modelBuilder.Entity("UserProfileService.Entities.PrivacySetting", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("AllowDataSharing")
                         .HasColumnType("bit");
@@ -73,8 +73,8 @@ namespace UserProfileService.Persistence.Migrations
 
             modelBuilder.Entity("UserProfileService.Entities.UserPreference", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DistanceUnit")
                         .IsRequired()
@@ -108,11 +108,9 @@ namespace UserProfileService.Persistence.Migrations
 
             modelBuilder.Entity("UserProfileService.Entities.UserProfile", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
