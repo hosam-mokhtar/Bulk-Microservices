@@ -49,3 +49,13 @@ services:
       dockerfile: src/UserProfileService/Dockerfile
     depends_on:
     - sqlserver
+  # ==========================================
+  # 3. userprofileservice Service 
+  # ==========================================
+   FECservice:
+    image: ${DOCKER_REGISTRY-}FECservice
+    build:
+      context: .
+      dockerfile: src/FECService/Dockerfile
+    depends_on:
+    - sqlserver
