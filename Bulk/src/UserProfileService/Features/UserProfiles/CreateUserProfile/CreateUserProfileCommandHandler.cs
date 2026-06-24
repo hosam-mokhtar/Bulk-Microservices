@@ -1,28 +1,36 @@
 ﻿using MediatR;
 using UserProfileService.Entities;
-using UserProfileService.Interfaces.Repositories;
+using UserProfileService.Interfaces;
 
 namespace UserProfileService.Features.UserProfiles.CreateUserProfile;
 
-public class CreateUserProfileCommandHandler(IUserProfileRepository<UserProfile> repo) : IRequestHandler<CreateUserProfileCommand, Guid>
+public class CreateUserProfileCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateUserProfileCommand, bool>
 {
-    public async Task<Guid> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
     {
-        //grt userId , Email from RabbitMQ messaging from auth service
-
         var userProfile = new UserProfile
         {
             UserId = Guid.CreateVersion7(),
             Email = request.Email,
             FirstName = request.FirstName,
             LastName = request.LastName,
-            Phone = request.Phone,
-            ProfilePictureUrl = "imageUrl"
+            Phone = request.Phone
         };
 
-        await repo.AddAsync(userProfile, cancellationToken);
-        await repo.SaveChangesAsync(cancellationToken);
+        var preferences = new UserPreference { UserId = request.UserId };
+        var notifications = new NotificationSetting { UserId = request.UserId };
+        var privacy = new PrivacySetting { UserId = request.UserId };
 
-        return userProfile.UserId;
+        await unitOfWork.Repository<UserProfile>().AddAsync(userProfile, cancellationToken);
+        await unitOfWork.Repository<UserPreference>().AddAsync(preferences, cancellationToken);
+        await unitOfWork.Repository<NotificationSetting>().AddAsync(notifications, cancellationToken);
+        await unitOfWork.Repository<PrivacySetting>().AddAsync(privacy, cancellationToken);
+
+        var rowsAffected = await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        if (rowsAffected == 0)
+            return false;
+
+        return true;
     }
 }

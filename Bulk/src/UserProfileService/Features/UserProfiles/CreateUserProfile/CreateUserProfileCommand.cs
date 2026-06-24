@@ -3,13 +3,12 @@
 namespace UserProfileService.Features.UserProfiles.CreateUserProfile;
 
 public record CreateUserProfileCommand(
-    Guid Id,
+    Guid UserId,
     string FirstName,
     string LastName,
     string Email,
-    string Phone,
-    IFormFile? Image
-) : IRequest<Guid>;
+    string Phone
+) : IRequest<bool>;
 
 #region Validation
 #endregion
