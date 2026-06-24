@@ -7,11 +7,8 @@ public class UserProfileRepository<T>(ApplicationDbContext context) : IUserProfi
 {
     private readonly DbSet<T> _dbSet = context.Set<T>();
 
-    public IQueryable GetQueryable() => _dbSet.AsQueryable();
+    public IQueryable<T> GetQueryable() => _dbSet;
 
     public async Task AddAsync(T entity, CancellationToken cancellationToken = default) =>
         await _dbSet.AddAsync(entity, cancellationToken);
-
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
-        await context.SaveChangesAsync(cancellationToken);
 }
