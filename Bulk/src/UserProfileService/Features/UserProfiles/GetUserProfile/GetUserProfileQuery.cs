@@ -5,31 +5,31 @@ using UserProfileService.Contracts.UserProfiles;
 using UserProfileService.Entities;
 using UserProfileService.Errors;
 using UserProfileService.Interfaces;
+using UserProfileService.Interfaces.Services;
 
 namespace UserProfileService.Features.UserProfiles.GetUserProfile;
 
-public record GetUserProfileQuery(
-    Guid UserId 
-) : IRequest<Result<UserProfileResponse>>;
+public record GetUserProfileQuery : IRequest<Result<UserProfileResponse>>;
 
-internal class GetUserProfileQueryHandler(IUnitOfWork _unitOfWork) : IRequestHandler<GetUserProfileQuery, Result<UserProfileResponse>>
+internal class GetUserProfileQueryHandler(IUnitOfWork _unitOfWork, ICurrentUser currentUser) : IRequestHandler<GetUserProfileQuery, Result<UserProfileResponse>>
 {
     public async Task<Result<UserProfileResponse>> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
     {
         var user = await _unitOfWork
             .Repository<UserProfile>()
             .GetQueryable()
-            .Where(x => x.UserId == request.UserId)
+            .Where(x => x.UserId == currentUser.Id)
             .Select(x => new UserProfileResponse(
                 x.UserId,
                 x.FirstName,
                 x.LastName,
                 x.Email,
                 x.Phone
-            )).FirstOrDefaultAsync(cancellationToken);
+            ))
+            .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null)
-            return Result.Failure<UserProfileResponse>(UserErrors.NotFound(request.UserId));
+            return Result.Failure<UserProfileResponse>(UserErrors.NotFound);
 
         return Result.Success(user);
     }

@@ -1,7 +1,9 @@
-﻿using UserProfileService.Interfaces.Repositories;
+﻿using UserProfileService.Impelementation.Repositories;
+using UserProfileService.Interfaces;
+using UserProfileService.Interfaces.Repositories;
 using UserProfileService.Persistence;
 
-namespace UserProfileService.Interfaces;
+namespace UserProfileService.Implementation;
 
 public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UserProfileService.Interfaces.Repositories;
 using UserProfileService.Persistence;
 
-namespace UserProfileService.Interfaces.Repositories;
+namespace UserProfileService.Impelementation.Repositories;
 
 public class UserProfileRepository<T>(ApplicationDbContext context) : IUserProfileRepository<T> where T : class
 {
