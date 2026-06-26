@@ -4,12 +4,13 @@ using FCEService.Domain.Entities.FitnessPlanConfig;
 using FCEService.Domain.Entities.UserAssignedPlan;
 using FCEService.Domain.Entities.UserFitnessStats;
 using FCEService.Domain.Entities.UserPlanHistory;
+using FCEService.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace FCEService.Infrastructure.Persistence
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : DbContext ,IAppDbContext
     {
         private readonly IPublisher _publisher;
 

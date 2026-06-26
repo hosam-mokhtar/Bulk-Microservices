@@ -12,5 +12,7 @@ namespace FCEService.Domain.Entities.UserFitnessStats
         public static Error GenderInvalid => Error.Validation(nameof(GenderInvalid), "Gender must be a valid option (Male or Female).");
         public static Error GoalInvalid => Error.Validation(nameof(GoalInvalid), "Goal must be a valid option.");
         public static Error ActivityLevelInvalid => Error.Validation(nameof(ActivityLevelInvalid), "Activity level must be a valid option.");
+        public static Error UserAlreadyExists => Error.Conflict(nameof(UserAlreadyExists), "UserFitnessStats for this user already exists.");
+        public static Error UserNotFound => Error.NotFound(nameof(UserNotFound), "UserFitnessStats for this user was not found.");
     }
 }

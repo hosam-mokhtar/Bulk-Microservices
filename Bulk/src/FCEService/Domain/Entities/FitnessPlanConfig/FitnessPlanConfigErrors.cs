@@ -4,6 +4,7 @@ namespace FCEService.Domain.Entities.FitnessPlanConfig
 {
     public static class FitnessPlanConfigErrors
     {
+        public static Error UserFitnessStatsAlreadyExists(int userId) => Error.Validation("UserFitnessStatsAlreadyExists", $"UserFitnessStats for this UserId:{userId} already exists");
         public static Error PlanIdRequired => Error.Validation(nameof(PlanIdRequired), "Plan ID is required.");
         public static Error PlanIdTooLong => Error.Validation(nameof(PlanIdTooLong), "Plan ID must be 50 characters or less.");
         public static Error PlanNameRequired => Error.Validation(nameof(PlanNameRequired), "Plan name is required.");

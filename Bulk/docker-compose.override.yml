@@ -52,5 +52,25 @@ services:
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
+   # ==========================================
+   # FCE Service (8084, 8085)
+   # ==========================================
+   fceservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=password
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/home/app/.aspnet/https/fceservice.pfx
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=FCEServiceDb;User Id=sa;Password=Bulk@123;MultipleActiveResultSets=true;TrustServerCertificate=True
+    ports:
+      - "8084:8080"
+      - "8085:8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
 volumes:
      sql_data:
