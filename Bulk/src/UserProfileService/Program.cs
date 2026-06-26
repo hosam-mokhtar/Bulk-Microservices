@@ -1,3 +1,4 @@
+using Carter;
 using Scalar.AspNetCore;
 using UserProfileService;
 
@@ -15,8 +16,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapCarter();
 
 app.Run();
