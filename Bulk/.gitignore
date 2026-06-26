@@ -93,3 +93,8 @@ build/
 #####################################
 _ReSharper*/
 *.DotSettings.user
+
+#####################################
+# AI Agent Instructions
+#####################################
+.antigravity_instructions.md
