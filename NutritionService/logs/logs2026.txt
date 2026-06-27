@@ -1,0 +1,9 @@
+2026-06-27 14:32:29.643 +03:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2026-06-27 14:32:29.995 +03:00 [DBG] Entity Framework Core 10.0.9 initialized 'NutritionDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:10.0.9' with options: MigrationsHistoryTable=NutritionService.__EFMigrationsHistory EngineType=SqlServer 
+2026-06-27 14:32:30.013 +03:00 [DBG] 'NutritionDbContext' disposed.
+2026-06-27 14:42:08.646 +03:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2026-06-27 14:42:08.973 +03:00 [DBG] Entity Framework Core 10.0.9 initialized 'NutritionDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:10.0.9' with options: MigrationsHistoryTable=NutritionService.__EFMigrationsHistory EngineType=SqlServer 
+2026-06-27 14:42:08.987 +03:00 [DBG] 'NutritionDbContext' disposed.
+2026-06-27 14:42:44.671 +03:00 [DBG] An 'IServiceProvider' was created for internal use by Entity Framework.
+2026-06-27 14:42:45.026 +03:00 [DBG] Entity Framework Core 10.0.9 initialized 'NutritionDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:10.0.9' with options: MigrationsHistoryTable=NutritionService.__EFMigrationsHistory EngineType=SqlServer 
+2026-06-27 14:42:45.628 +03:00 [DBG] 'NutritionDbContext' disposed.
