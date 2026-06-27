@@ -29,7 +29,7 @@ internal class GetUserProfileQueryHandler(IUnitOfWork _unitOfWork, ICurrentUser 
             .FirstOrDefaultAsync(cancellationToken);
 
         if (user is null)
-            return Result.Failure<UserProfileResponse>(UserErrors.NotFound);
+            return Result.Failure<UserProfileResponse>(UserErrors.InvalidToken);
 
         return Result.Success(user);
     }

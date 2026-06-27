@@ -1,21 +1,16 @@
 ﻿using MediatR;
 using UserProfileService.Entities;
 using UserProfileService.Interfaces;
+using UserProfileService.Interfaces.Services;
 
 namespace UserProfileService.Features.UserProfiles.CreateUserProfile;
 
-public class CreateUserProfileCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateUserProfileCommand, bool>
+public class CreateUserProfileCommandHandler(IUnitOfWork unitOfWork, ICurrentUser currentUser) : IRequestHandler<CreateUserProfileCommand, bool>
 {
     public async Task<bool> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
     {
-        var userProfile = new UserProfile
-        {
-            UserId = Guid.CreateVersion7(),
-            Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
-            Phone = request.Phone
-        };
+        var userProfile = UserProfile.
+            Create(currentUser.Id, request.FirstName, request.LastName, request.Email, request.Phone);
 
         var preferences = new UserPreference { UserId = request.UserId };
         var notifications = new NotificationSetting { UserId = request.UserId };

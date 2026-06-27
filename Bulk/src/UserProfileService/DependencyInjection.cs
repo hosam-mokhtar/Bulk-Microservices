@@ -33,6 +33,7 @@ public static class DependencyInjection
         services.AddScoped<ICurrentUser, CurrentUser>();
 
         services.AddHttpContextAccessor();
+        services.AddProblemDetails();
         services.AddRabbitMqConfiguration();
         services.AddAuthenticationConfig(configuration);
         services.AddCarter();
