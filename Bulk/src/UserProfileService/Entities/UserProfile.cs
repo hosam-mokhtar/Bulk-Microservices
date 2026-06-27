@@ -15,5 +15,19 @@ public sealed class UserProfile
     public NotificationSetting NotificationSetting { get; set; } = null!;
     public PrivacySetting PrivacySetting { get; set; } = null!;
 
-    //private UserProfile() { }
+    private UserProfile() { }
+
+    public static UserProfile CreateInstance(Guid userId) => new() { UserId = userId };
+
+    public static UserProfile Create(Guid userId, string firstName, string lastName, string email, string phone) =>
+        new()
+        { UserId = userId, FirstName = firstName, LastName = lastName, Email = email, Phone = phone };
+
+    public void Update(string firstName, string lastName, string email, string phone)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        Phone = phone;
+    }
 }
