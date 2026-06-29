@@ -1,8 +1,8 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="../../NutritionService/NutritionService.csproj" />
     <Project Path="src/AuthenticationService/AuthenticationService.csproj" />
     <Project Path="src/FCEService/FCEService.csproj" Id="ad5da5e1-c4a3-4b99-a9df-9e2a5b33c812" />
+    <Project Path="src/NutritionService/NutritionService.csproj" />
     <Project Path="src/UserProfileService/UserProfileService.csproj" Id="f72b74ee-16e4-48f9-86c3-881f35d38353" />
     <Project Path="src/WorkoutService/WorkoutService.csproj" Id="f3297844-45be-49b5-a48c-15f9ae742dee" />
   </Folder>
