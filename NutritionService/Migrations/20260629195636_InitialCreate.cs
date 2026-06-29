@@ -12,19 +12,38 @@ namespace NutritionService.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "MealPlans",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    TargetCalorieRangeMin = table.Column<double>(type: "float", nullable: false),
+                    TargetCalorieRangeMax = table.Column<double>(type: "float", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MealPlans", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Meals",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Type = table.Column<int>(type: "int", maxLength: 20, nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Calories = table.Column<double>(type: "float", nullable: false),
                     Protein = table.Column<double>(type: "float", nullable: false),
                     Carbs = table.Column<double>(type: "float", nullable: false),
                     Fats = table.Column<double>(type: "float", nullable: false),
-                    IngredientsJson = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    InstructionsJson = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    VariationsJson = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IngredientsJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    InstructionsJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VariationsJson = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AllergensJson = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     TagsJson = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -35,25 +54,6 @@ namespace NutritionService.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Meals", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MealsPlan",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    TargetCalorieTangeMin = table.Column<double>(type: "float", nullable: false),
-                    TargetCalorieTangeMax = table.Column<double>(type: "float", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MealsPlan", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,9 +74,9 @@ namespace NutritionService.Migrations
                 {
                     table.PrimaryKey("PK_MealPlanItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MealPlanItems_MealsPlan_MealPlanId",
+                        name: "FK_MealPlanItems_MealPlans_MealPlanId",
                         column: x => x.MealPlanId,
-                        principalTable: "MealsPlan",
+                        principalTable: "MealPlans",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -105,7 +105,7 @@ namespace NutritionService.Migrations
                 name: "MealPlanItems");
 
             migrationBuilder.DropTable(
-                name: "MealsPlan");
+                name: "MealPlans");
 
             migrationBuilder.DropTable(
                 name: "Meals");

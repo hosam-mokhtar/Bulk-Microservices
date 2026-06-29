@@ -12,7 +12,7 @@ using NutritionService.Infrastructure.Persistence;
 namespace NutritionService.Migrations
 {
     [DbContext(typeof(NutritionDbContext))]
-    [Migration("20260627114245_InitialCreate")]
+    [Migration("20260629195636_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -53,13 +53,11 @@ namespace NutritionService.Migrations
 
                     b.Property<string>("IngredientsJson")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InstructionsJson")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -77,17 +75,16 @@ namespace NutritionService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("Type")
+                    b.Property<string>("Type")
+                        .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VariationsJson")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -119,10 +116,10 @@ namespace NutritionService.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<double>("TargetCalorieTangeMax")
+                    b.Property<double>("TargetCalorieRangeMax")
                         .HasColumnType("float");
 
-                    b.Property<double>("TargetCalorieTangeMin")
+                    b.Property<double>("TargetCalorieRangeMin")
                         .HasColumnType("float");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -130,7 +127,7 @@ namespace NutritionService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MealsPlan");
+                    b.ToTable("MealPlans", (string)null);
                 });
 
             modelBuilder.Entity("NutritionService.Domain.Entities.MealPlanItem", b =>
