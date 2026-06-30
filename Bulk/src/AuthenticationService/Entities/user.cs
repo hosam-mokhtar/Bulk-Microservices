@@ -2,7 +2,7 @@
 
 namespace AuthenticationService.Entities
 {
-    public partial class User : AuditableEntity
+    public partial class User : Auditable
     {
         public Guid Id { get; set; }
         public string FirstName { get; set; } = string.Empty;
@@ -27,5 +27,6 @@ namespace AuthenticationService.Entities
 
         public ICollection<RefreshToken> RefreshTokens { get; set; }  = [];
         public ICollection<LoginAttempt> LoginAttempts { get; set; }  = [];
+        public ICollection<OtpCode> OtpCodes { get; set; }  = [];
     }
 }

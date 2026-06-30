@@ -1,5 +1,5 @@
 using AuthenticationService.Extensions;
-using AuthenticationService.Features.Register;
+using AuthenticationService.Features;
 using MassTransit;
 using Scalar.AspNetCore;
 
@@ -16,21 +16,6 @@ namespace AuthenticationService
 
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddMassTransit(x =>
-            {
-                x.UsingRabbitMq((context, cfg) =>
-                {
-                    cfg.Host("localhost", "/", h =>
-                    {
-                        h.Username("guest");
-                        h.Password("guest");
-                    });
-
-                    cfg.Message<UserRegisteredEvent>(x =>
-                        x.SetEntityName("user-registered-event"));
-                });
-            });
-
             var app = builder.Build();
 
             #region Minmal APIs Endpoints
@@ -40,7 +25,10 @@ namespace AuthenticationService
             #endregion
 
             app.MapOpenApi();
-            app.MapScalarApiReference();
+            app.MapScalarApiReference(options =>
+            {
+                options.Title = "Bulk Authentication Service";
+            });
 
             app.UseHttpsRedirection();
 
