@@ -6,8 +6,14 @@ namespace AuthenticationService.Persistence.Repositories.RefreshToken
 {
     public interface IRefreshTokenRepository
     {
-        public void Add(RefreshTokenEntity refreshToken);
-        Task<RefreshTokenEntity?> GetByTokenAsync(string token, CancellationToken cancellationToken);
+        void Add(RefreshTokenEntity refreshToken);
 
+        Task<RefreshTokenEntity?> GetByTokenAsync(
+            string token,
+            CancellationToken cancellationToken = default);
+
+        Task<List<RefreshTokenEntity>> GetActiveByUserIdAsync(
+            Guid userId,
+            CancellationToken cancellationToken = default);
     }
 }

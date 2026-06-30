@@ -2,11 +2,15 @@
 {
     public partial class User
     {
+        protected void SetUpdated(Guid updatedBy)
+        {
+            UpdatedAt = DateTime.UtcNow;
+            UpdatedBy = updatedBy;
+        }
         public void UpdatePassword(string passwordHash, Guid updatedBy)
         {
             PasswordHash = passwordHash;
-            UpdatedAt = DateTime.UtcNow;
-            UpdatedBy = updatedBy;
+            SetUpdated(updatedBy);
         }
 
         public void VerifyEmail()

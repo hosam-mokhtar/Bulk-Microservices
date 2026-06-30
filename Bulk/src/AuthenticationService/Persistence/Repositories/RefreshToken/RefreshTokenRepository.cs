@@ -2,7 +2,7 @@
 using RefreshTokenEntity = AuthenticationService.Entities.RefreshToken;
 namespace AuthenticationService.Persistence.Repositories.RefreshToken
 {
-    public class RefreshTokenRepository(AuthDbContext _context) 
+    public class RefreshTokenRepository(AuthDbContext _context)
         : IRefreshTokenRepository
     {
 
@@ -16,7 +16,21 @@ namespace AuthenticationService.Persistence.Repositories.RefreshToken
             CancellationToken cancellationToken = default)
         {
             return await _context.RefreshTokens
-                .FirstOrDefaultAsync(x => x.Token == token, cancellationToken);
+                .FirstOrDefaultAsync(
+                    x => x.Token == token,
+                    cancellationToken);
+        }
+
+        public async Task<List<RefreshTokenEntity>> GetActiveByUserIdAsync(
+            Guid userId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.RefreshTokens
+                .Where(x =>
+                    x.UserId == userId &&
+                    x.RevokedAt == null &&
+                    x.ExpiresAt > DateTime.UtcNow)
+                .ToListAsync(cancellationToken);
         }
     }
 }

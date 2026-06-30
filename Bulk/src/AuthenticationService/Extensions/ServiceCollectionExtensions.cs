@@ -1,18 +1,23 @@
-﻿using AuthenticationService.Common;
-using AuthenticationService.Features.Register;
+using System.Text;
+using AuthenticationService.Common;
+using AuthenticationService.Features.Commands.Register;
 using AuthenticationService.Persistence;
+using AuthenticationService.Persistence.Repositories.OtpCode;
 using AuthenticationService.Persistence.Repositories.RefreshToken;
+using AuthenticationService.Persistence.Repositories.ResetToken;
 using AuthenticationService.Persistence.Repositories.UnitOfWork;
 using AuthenticationService.Persistence.Repositories.User;
+using AuthenticationService.Services.Email;
 using AuthenticationService.Services.Jwt;
+using AuthenticationService.Services.OtpCode;
 using AuthenticationService.Services.Password;
 using AuthenticationService.Services.RefreshToken;
+using AuthenticationService.Services.ResetToken;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace AuthenticationService.Extensions;
 
@@ -78,7 +83,7 @@ public static class ServiceCollectionExtensions
 
         #region MediatR
 
-        services.AddMediatR(typeof(RegisterCommandHandler).Assembly);
+        services.AddMediatR(typeof(Program).Assembly);
 
         #endregion
 
@@ -93,6 +98,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+        services.AddScoped<IOtpCodeRepository, OtpCodeRepository>();
+        services.AddScoped<IResetTokenRepository, ResetTokenRepository>();
 
         #endregion
 
@@ -101,7 +108,11 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
-
+        services.AddScoped<IOtpCodeService, OtpCodeService>();
+        services.Configure<EmailSettings>(
+            configuration.GetSection("Email"));
+        services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IResetTokenService, ResetTokenService>();
         #endregion
 
         #region Unit of Work
