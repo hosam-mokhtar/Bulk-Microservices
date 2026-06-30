@@ -1,16 +1,16 @@
 ﻿using AuthenticationService.Common;
 using AuthenticationService.Entities;
-using AuthenticationService.Features.Register;
 using AuthenticationService.Persistence.Repositories.UnitOfWork;
 using AuthenticationService.Persistence.Repositories.User;
 using AuthenticationService.Services.Password;
+using MassTransit;
 using MediatR;
 
 namespace AuthenticationService.Features.Register
 {
-    public class RegisterCommandHandler(IUserRepository _userRepository,
-                                        IPasswordService _passwordService,
-                                        IUnitOfWork _unitOfWork) 
+    public class RegisterCommandHandler(
+        IUserRepository _userRepository, IPasswordService _passwordService, IUnitOfWork _unitOfWork,
+        IPublishEndpoint publishEndpoint)
         : IRequestHandler<RegisterCommand, RequestResult<RegisterResponse>>
     {
         public async Task<RequestResult<RegisterResponse>> Handle(
@@ -26,10 +26,10 @@ namespace AuthenticationService.Features.Register
             {
                 return RequestResult<RegisterResponse>.Failure(
                     message: "Email already registered.",
-                    errors: new[]
-                    {
+                    errors:
+                    [
                     "AUTH_EMAIL_EXISTS"
-                    },
+                    ],
                     statusCode: StatusCodes.Status409Conflict);
             }
 
@@ -56,6 +56,14 @@ namespace AuthenticationService.Features.Register
             _userRepository.Add(user);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            await publishEndpoint.Publish(new UserRegisteredEvent(
+                user.Id,
+                request.FirstName,
+                request.LastName,
+                request.Email,
+                request.PhoneNumber
+                ), cancellationToken);
 
             // Response
             return RequestResult<RegisterResponse>.Success(

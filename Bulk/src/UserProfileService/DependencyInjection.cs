@@ -59,8 +59,6 @@ public static class DependencyInjection
     {
         services.AddMassTransit(x =>
         {
-            x.SetKebabCaseEndpointNameFormatter();
-
             x.AddConsumer<UserRegisteredConsumer>();
 
             x.UsingRabbitMq((context, cfg) =>
@@ -73,6 +71,7 @@ public static class DependencyInjection
 
                 cfg.ReceiveEndpoint("user-registered-queue", e =>
                 {
+                    e.Bind("user-registered-event");
                     e.ConfigureConsumer<UserRegisteredConsumer>(context);
                 });
             });

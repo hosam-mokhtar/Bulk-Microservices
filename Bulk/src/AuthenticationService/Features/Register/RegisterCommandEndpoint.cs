@@ -1,7 +1,5 @@
-﻿using AuthenticationService.Common;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 namespace AuthenticationService.Features.Register;
 
 public static class RegisterCommandEndpoint
@@ -30,7 +28,7 @@ public static class RegisterCommandEndpoint
             .WithTags("Authentication")
             .WithSummary("Register")
             .WithDescription("Registers a new user.");
-        
+
         return app;
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using System.Text;
-using AuthenticationService.Common;
+﻿using AuthenticationService.Common;
 using AuthenticationService.Features.Register;
 using AuthenticationService.Persistence;
 using AuthenticationService.Persistence.Repositories.RefreshToken;
@@ -14,7 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
+using System.Text;
 
 namespace AuthenticationService.Extensions;
 
@@ -24,8 +22,6 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-
-        services.AddEndpointsApiExplorer();
 
         //#region Controllers
         //services.AddControllers();
@@ -56,7 +52,7 @@ public static class ServiceCollectionExtensions
 
         #region Authentication
 
-        var jwt = configuration.GetSection("Jwt");
+        var jwt = configuration.GetSection("Jwt").Get<JwtSettings>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -68,11 +64,11 @@ public static class ServiceCollectionExtensions
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
 
-                    ValidIssuer = jwt["Issuer"],
-                    ValidAudience = jwt["Audience"],
 
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwt["Key"]!))
+                    ValidIssuer = jwt!.Issuer,
+                    ValidAudience = jwt.Audience,
+
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.Key!))
                 };
             });
 

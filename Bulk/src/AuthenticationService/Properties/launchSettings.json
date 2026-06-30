@@ -11,14 +11,14 @@
       "applicationUrl": "http://localhost:7071"
     },
     "https": {
-        "commandName": "Project",
-        "launchBrowser": true,
-        "launchUrl": "scalar",
-        "environmentVariables": {
-            "ASPNETCORE_ENVIRONMENT": "Development"
-        },
-        "dotnetRunMessages": true,
-        "applicationUrl": "https://localhost:7071;http://localhost:7070"
+      "launchBrowser": true,
+      "launchUrl": "scalar",
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7071;http://localhost:7070"
     },
     "IIS Express": {
         "commandName": "IISExpress",

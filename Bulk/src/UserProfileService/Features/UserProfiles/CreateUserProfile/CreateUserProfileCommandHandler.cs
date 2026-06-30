@@ -1,16 +1,15 @@
 ﻿using MediatR;
 using UserProfileService.Entities;
 using UserProfileService.Interfaces;
-using UserProfileService.Interfaces.Services;
 
 namespace UserProfileService.Features.UserProfiles.CreateUserProfile;
 
-public class CreateUserProfileCommandHandler(IUnitOfWork unitOfWork, ICurrentUser currentUser) : IRequestHandler<CreateUserProfileCommand, bool>
+public class CreateUserProfileCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<CreateUserProfileCommand, bool>
 {
     public async Task<bool> Handle(CreateUserProfileCommand request, CancellationToken cancellationToken)
     {
         var userProfile = UserProfile.
-            Create(currentUser.Id, request.FirstName, request.LastName, request.Email, request.Phone);
+            Create(request.UserId, request.FirstName, request.LastName, request.Email, request.Phone);
 
         var preferences = new UserPreference { UserId = request.UserId };
         var notifications = new NotificationSetting { UserId = request.UserId };
@@ -23,9 +22,6 @@ public class CreateUserProfileCommandHandler(IUnitOfWork unitOfWork, ICurrentUse
 
         var rowsAffected = await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        if (rowsAffected == 0)
-            return false;
-
-        return true;
+        return rowsAffected > 0;
     }
 }
